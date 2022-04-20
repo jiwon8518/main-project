@@ -1,0 +1,165 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: String!
+  name: String!
+  nickName: String!
+  phoneNumber: String!
+  email: String!
+  cumulativeAmount: Int!
+}
+
+type MainCategory {
+  id: String!
+  name: String!
+}
+
+type SubCategory {
+  id: String!
+  name: String!
+  mainCategory: MainCategory!
+}
+
+type Room {
+  id: String!
+  name: String!
+  description: String!
+  inventory: Int!
+  basicNumberPeople: Int!
+  maxNumberPeople: Int!
+  usageTypeName: String!
+  startTime: DateTime!
+  endTime: DateTime!
+  totalTimeAmount: Int!
+  price: Int!
+  checkInDate: DateTime!
+  checkOutDate: DateTime!
+  subCategory: SubCategory!
+  roomTags: [RoomTag!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type RoomTag {
+  id: String!
+  name: String!
+  rooms: [Room!]!
+}
+
+type Payment {
+  id: String!
+  impUid: String!
+  amount: Int!
+  status: PAYMENT_STATUS_ENUM!
+  createAt: DateTime!
+}
+
+enum PAYMENT_STATUS_ENUM {
+  PAYMENT
+  CANCEL
+}
+
+type Place {
+  id: String!
+  name: String!
+  address: String!
+  subCategory: SubCategory!
+}
+
+type Image {
+  id: String!
+  url: String!
+  isMain: Boolean!
+  place: Place!
+}
+
+type Query {
+  fetchMainCategorys: [MainCategory!]!
+  fetchMainCategory(mainCategoryId: String!): MainCategory!
+  fetchSubCategorys: [SubCategory!]!
+  fetchSubCategory(subCategoryId: String!): SubCategory!
+  fetchRooms(search: String!): [Room!]!
+  fetchRoom(roomId: String!): Room!
+  fetchUsers: [User!]!
+  fetchUser: String!
+  fetchImages(roomId: String!): [Image!]!
+}
+
+type Mutation {
+  login(password: String!, email: String!): String!
+  restoreAccessToken: String!
+  logout: String!
+  createMainCategory(name: String!): MainCategory!
+  updateMainCategory(name: String!, mainCategoryId: String!): MainCategory!
+  uploadFile(file: Upload!): String!
+  uploadFiles(files: [Upload!]!): [String!]!
+  createPayment(amount: Float!, impUid: String!): Payment!
+  cancelPayment(impUid: String!): Payment!
+  createSubCategory(mainCategoryId: String!, name: String!): SubCategory!
+  updateSubCategory(subCategoryId: String!): SubCategory!
+  deleteSubCategory(subCategoryId: String!): Boolean!
+  createRoom(createRoomInput: CreateRoomInput!): Room!
+  updateRoom(updateRoomInput: UpdateRoomInput!, roomId: String!): Room!
+  deleteRoom(roomId: String!): Boolean!
+  restoreRoom(roomId: String!): Room!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!, userId: String!): User!
+  deleteUser(userId: String!): Boolean!
+  uploadImages(files: [Upload!]!): [String!]!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input CreateRoomInput {
+  name: String!
+  description: String!
+  inventory: Int!
+  basicNumberPeople: Int!
+  maxNumberPeople: Int!
+  usageTypeName: String!
+  startTime: DateTime!
+  endTime: DateTime!
+  totalTimeAmount: Int!
+  price: Int!
+  checkInDate: DateTime!
+  checkOutDate: DateTime!
+  subCategoryId: String!
+  roomTags: [String!]!
+}
+
+input UpdateRoomInput {
+  name: String
+  description: String
+  inventory: Int
+  basicNumberPeople: Int
+  maxNumberPeople: Int
+  usageTypeName: String
+  startTime: DateTime
+  endTime: DateTime
+  totalTimeAmount: Int
+  price: Int
+  checkInDate: DateTime
+  checkOutDate: DateTime
+}
+
+input CreateUserInput {
+  name: String!
+  nickName: String!
+  phoneNumber: String!
+  email: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  name: String!
+  nickName: String
+  phoneNumber: String
+  email: String
+  password: String
+}

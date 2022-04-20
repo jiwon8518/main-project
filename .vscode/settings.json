@@ -1,0 +1,5 @@
+{
+  // 항상 최상단에 폴더가 위치 해야됨
+  "editor.formatOnSave": true, // 저장하면 바로 적용해라
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
